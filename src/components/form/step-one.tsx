@@ -39,8 +39,8 @@ const FormStep1: React.FC<FormStep1Props> = ({
 
 	return (
 		<div className="space-y-6">
-			<div className="bg-teal-900/30 rounded-lg p-6 text-center ">
-				<div className="px-8">
+			<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] rounded-lg p-6 text-center">
+				<div className="md:px-8">
 					<h1 className="text-3xl font-serif mb-2">Techember Fest &apos;25</h1>
 					<p className="text-gray-300 mb-2">
 						Join us for an unforgettable experience at Techember Fest. Secure
@@ -48,10 +48,9 @@ const FormStep1: React.FC<FormStep1Props> = ({
 					</p>
 					<p className="text-gray-300">
 						📍 04 Rumens road, Ikoyi, Lagos || March 15, 2025 | 7:00 PM
-					</p>{" "}
+					</p>
 				</div>
 			</div>
-
 			<div className="space-y-4">
 				<h2 className="text-lg text-gray-300">Select Ticket Type:</h2>
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 border border-slate-600 p-4 rounded-2xl">
@@ -84,7 +83,6 @@ const FormStep1: React.FC<FormStep1Props> = ({
 					<p className="text-red-500 text-sm">{errors?.ticketType}</p>
 				)}
 			</div>
-
 			<div className="space-y-4">
 				<label htmlFor="ticket-quantity" className="text-lg text-gray-300">
 					Number of Tickets

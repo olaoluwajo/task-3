@@ -80,8 +80,12 @@ export default function Home() {
 			<div className="  ">
 				<div className="max-w-2xl mx-auto rounded-3xl border border-slate-500 p-8">
 					<div className="flex justify-between items-center mb-2">
-						<h2 className="text-xl font-serif ">Ticket Selection</h2>
-						<span>Step 1/3</span>
+						<h2 className="text-xl font-serif ">
+							{currentStep === FormStep.TicketSelection && "Ticket Selection"}
+							{currentStep === FormStep.AttendeeDetails && "Attendee Details"}
+							{currentStep === FormStep.Complete && "Ready"}
+						</h2>
+						<span>Step {currentStep}/3</span>
 					</div>
 					{/* Progress bar */}
 
@@ -125,7 +129,7 @@ export default function Home() {
 						</AnimatePresence>
 						{/* Form content */}
 						<TransitionWrapper step={currentStep}>
-							<div className="bg-teal-900/20  border-slate-500 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+							<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] border  border-slate-500 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
 								{currentStep === FormStep.TicketSelection && (
 									<FormStep1 formData={formData} updateFormData={setFormData} />
 								)}

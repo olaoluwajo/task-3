@@ -3,7 +3,7 @@ import React from "react";
 
 const NavBar = () => {
 	return (
-		<nav className="w-[80rem] mx-auto flex justify-between items-center border  p-4 rounded-2xl border-slate-500 bg-[#102527] shadow-md">
+		<nav className="md:w-[80rem] w-full mx-auto flex justify-between items-center border  p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
 			<div className="flex justify-center items-center">
 				<Image
 					src="/thumb.png"
@@ -18,7 +18,7 @@ const NavBar = () => {
 					alt="Description of the image"
 				/>
 			</div>
-			<div className="space-x-7 text-gray-300">
+			<div className="hidden md:block space-x-7 text-gray-300">
 				<a href="#" className="hover:text-white">
 					Events
 				</a>
