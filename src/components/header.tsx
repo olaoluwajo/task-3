@@ -1,11 +1,16 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const NavBar = () => {
+	const pathname = usePathname();
+
 	return (
-		<nav className="md:w-[80rem] sticky w-full mx-auto flex justify-between items-center border mt-4  p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
-			<div className="flex justify-center items-center">
+		<nav className="md:w-[80rem] sticky w-full mx-auto flex justify-between items-center border mt-4 p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
+			<Link href='/' className="flex justify-center items-center">
 				<Image
 					src="/thumb.png"
 					width={30}
@@ -18,15 +23,30 @@ const NavBar = () => {
 					height={20}
 					alt="Description of the image"
 				/>
-			</div>
+			</Link>
 			<div className="hidden md:block space-x-7 text-gray-300">
-				<Link href="/" className="hover:text-white">
+				<Link
+					href="/"
+					className={`hover:text-white ${
+						pathname === "/" ? "text-white font-bold" : ""
+					}`}
+				>
 					Events
 				</Link>
-				<Link href="/tickets" className="hover:text-white">
+				<Link
+					href="/tickets"
+					className={`hover:text-white ${
+						pathname === "/tickets" ? "text-white font-bold" : ""
+					}`}
+				>
 					My Tickets
 				</Link>
-				<Link href="/about-us" className="hover:text-white">
+				<Link
+					href="/about-us"
+					className={`hover:text-white ${
+						pathname === "/about-us" ? "text-white font-bold" : ""
+					}`}
+				>
 					About Project
 				</Link>
 			</div>

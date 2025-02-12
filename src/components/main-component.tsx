@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { validateTicketForm } from "@/utils/validation"; // Remove sendTicketEmail import
-import { FormStep, TicketFormData } from "@/types";
+import { FormStep, TicketFormData, ValidationErrors } from "@/types";
 import { downloadTicket } from "@/utils/ticket-download";
 import TransitionWrapper from "@/context/transition-wrapper";
 import FormStep1 from "@/components/form/step-one";
@@ -12,8 +12,8 @@ import FormStep3 from "@/components/form/step-three";
 import { useStateContext } from "@/context/state-context";
 
 export default function Home() {
-	const { isLoading, setIsLoading, error, setError, showSuccess } =
-		useStateContext();
+	const { isLoading, setIsLoading, showSuccess } = useStateContext();
+	const [error, setError] = useState<ValidationErrors | null>(null);
 
 	const [currentStep, setCurrentStep] = useState<FormStep>(
 		FormStep.TicketSelection
@@ -28,11 +28,28 @@ export default function Home() {
 		price: 0,
 	});
 
-	const handleUpdateFormData = (data: Partial<TicketFormData>) => {
+	// const handleUpdateFormData = (data: Partial<TicketFormData>) => {
+	// 	setFormData((prevData) => ({
+	// 		...prevData,
+	// 		...data,
+	// 	}));
+	// };
+
+		const handleUpdateFormData = (data: Partial<TicketFormData>) => {
 		setFormData((prevData) => ({
 			...prevData,
 			...data,
 		}));
+
+		if (error && Object.keys(data)[0]) {
+			const fieldName = Object.keys(data)[0] as keyof TicketFormData;
+			setError((prevError) => {
+				if (!prevError) return null;
+				const newError = { ...prevError };
+				delete newError[fieldName];
+				return Object.keys(newError).length > 0 ? newError : null;
+			});
+		}
 	};
 
 	const ticketRef = useRef<HTMLDivElement>(null);
@@ -48,12 +65,14 @@ export default function Home() {
 		localStorage.setItem("ticketFormData", JSON.stringify(formData));
 	}, [formData]);
 
+
 	const handleNext = async () => {
-		console.log("Form Data:", formData);
+		// console.log("Form Data:", formData);
 		const errors = validateTicketForm(formData, currentStep);
+		console.log("ERROR", errors);
 
 		if (Object.keys(errors).length > 0) {
-			setError(Object.values(errors)[0]);
+			setError(errors); 
 			return;
 		}
 
@@ -69,7 +88,7 @@ export default function Home() {
 				}
 			} catch (error) {
 				console.log(error);
-				setError("Failed to process ticket. Please try again.");
+				setError({ general: "Failed to process ticket. Please try again." }); 
 				return;
 			} finally {
 				setIsLoading(false);
@@ -86,9 +105,9 @@ export default function Home() {
 	return (
 		<main className="text-white md:p-4 max-w-4xl mx-auto">
 			<div className="">
-				<div className="min-w-2xl mx-auto rounded-3xl border border-slate-500 p-8">
+				<div className="min-w-2xl mx-auto rounded-3xl border border-slate-500 p-6 md:p-8">
 					<div className="flex justify-between items-center mb-2">
-						<h2 className="text-xl font-serif">
+						<h2 className="text-xl md:text-4xl font-serif">
 							{currentStep === FormStep.TicketSelection && "Ticket Selection"}
 							{currentStep === FormStep.AttendeeDetails && "Attendee Details"}
 							{currentStep === FormStep.Complete && "Ready"}
@@ -119,7 +138,7 @@ export default function Home() {
 								</motion.div>
 							)}
 						</AnimatePresence>
-						<AnimatePresence>
+						{/* <AnimatePresence>
 							{error && (
 								<motion.div
 									initial={{ opacity: 0, y: 20 }}
@@ -130,14 +149,14 @@ export default function Home() {
 									{error}
 								</motion.div>
 							)}
-						</AnimatePresence>
+						</AnimatePresence> */}
 						<TransitionWrapper step={currentStep}>
-							<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] border border-slate-500 backdrop-blur-sm rounded-3xl p-6 shadow-xl min-w-4xl">
+							<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] border border-slate-500 backdrop-blur-sm rounded-3xl p-4 md:p-6 shadow-xl min-w-4xl">
 								{currentStep === FormStep.TicketSelection && (
 									<FormStep1
 										formData={formData}
 										updateFormData={handleUpdateFormData}
-										errors={error}
+										errors={error || undefined}
 									/>
 								)}
 
@@ -145,7 +164,7 @@ export default function Home() {
 									<FormStep2
 										formData={formData}
 										updateFormData={handleUpdateFormData}
-										errors={error}
+										errors={error || undefined}
 									/>
 								)}
 

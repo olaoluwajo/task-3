@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useRef } from "react";
 import { TicketFormData } from "@/types";
 import { Upload } from "lucide-react";
@@ -6,8 +5,8 @@ import Image from "next/image";
 
 interface FormStep2Props {
 	formData: TicketFormData;
-	updateFormData: any;
-	errors?: any;
+	updateFormData: (data: Partial<TicketFormData>) => void;
+	errors?: Partial<Record<keyof TicketFormData, string>>;
 }
 
 const FormStep2: React.FC<FormStep2Props> = ({
@@ -15,6 +14,7 @@ const FormStep2: React.FC<FormStep2Props> = ({
 	updateFormData,
 	errors,
 }) => {
+	// console.log("ERROR", errors);
 	const fileInputRef = useRef<HTMLInputElement>(null);
 
 	const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,8 +44,10 @@ const FormStep2: React.FC<FormStep2Props> = ({
 		}
 	};
 
-	const handleInputChange = (field: string, value: string) => {
-		updateFormData({ ...formData, [field]: value });
+	const handleInputChange = (field: keyof TicketFormData, value: string) => {
+		updateFormData({
+			[field]: value,
+		});
 	};
 
 	return (
@@ -55,7 +57,9 @@ const FormStep2: React.FC<FormStep2Props> = ({
 				<div className="flex justify-center">
 					<div
 						onClick={() => fileInputRef.current?.click()}
-						className="relative cursor-pointer size-50 md:size-64 rounded-3xl bg-[#002A30] flex flex-col items-center justify-center border-2 border-dashed border-teal-500/30 hover:border-teal-500 transition-colors"
+						className={`relative cursor-pointer size-50 md:size-64 rounded-3xl bg-[#002A30] flex flex-col items-center justify-center border-2 border-dashed ${
+							errors?.avatarUrl ? "border-red-500" : "border-teal-500/30"
+						} hover:border-teal-500 transition-colors`}
 					>
 						<input
 							type="file"
@@ -86,16 +90,23 @@ const FormStep2: React.FC<FormStep2Props> = ({
 						)}
 					</div>
 				</div>
+				{errors?.avatarUrl && (
+					<p className="text-red-500 text-sm mt-2 text-center">
+						{errors.avatarUrl}
+					</p>
+				)}
 			</div>
 
 			<div className="space-y-4">
 				<div>
-					<label className="block text-gray-300 mb-2">Enter your name</label>
+					<label className="block text-gray-300 mb-2">Enter your name *</label>
 					<input
 						type="text"
 						value={formData.fullName}
 						onChange={(e) => handleInputChange("fullName", e.target.value)}
-						className="w-full bg-transparent border border-gray-600 rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+						className={`w-full bg-transparent border ${
+							errors?.fullName ? "border-red-500" : "border-gray-600"
+						} rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500`}
 						placeholder="Enter your name"
 					/>
 					{errors?.fullName && (
@@ -104,12 +115,14 @@ const FormStep2: React.FC<FormStep2Props> = ({
 				</div>
 
 				<div>
-					<label className="block text-gray-300 mb-2">Enter your email</label>
+					<label className="block text-gray-300 mb-2">Enter your email *</label>
 					<input
 						type="email"
 						value={formData.email}
 						onChange={(e) => handleInputChange("email", e.target.value)}
-						className="w-full bg-transparent border border-gray-600 rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+						className={`w-full bg-transparent border ${
+							errors?.email ? "border-red-500" : "border-gray-600"
+						} rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500`}
 						placeholder="Enter your email"
 					/>
 					{errors?.email && (
@@ -118,11 +131,13 @@ const FormStep2: React.FC<FormStep2Props> = ({
 				</div>
 
 				<div>
-					<label className="block text-gray-300 mb-2">Special Request</label>
+					<label className="block text-gray-300 mb-2">Special Request *</label>
 					<textarea
 						value={formData.aboutProject}
 						onChange={(e) => handleInputChange("aboutProject", e.target.value)}
-						className="w-full bg-transparent border border-gray-600 rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
+						className={`w-full bg-transparent border ${
+							errors?.aboutProject ? "border-red-500" : "border-gray-600"
+						} rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500`}
 						rows={4}
 						placeholder="Describe your request in detail"
 					/>

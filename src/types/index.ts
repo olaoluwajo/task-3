@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface TicketFormData {
 	ticketType: "REGULAR" | "VIP" | "VVIP";
 	quantity: number;
@@ -7,15 +6,21 @@ export interface TicketFormData {
 	avatarUrl: string;
 	aboutProject: string;
 	price: number;
+	errors?: {
+		fullName?: string;
+		email?: string;
+		aboutProject?: string;
+		avatarUrl?: string;
+	};
 }
 
 export interface ValidationErrors {
-  ticketType?: string;
-  quantity?: string;
-  fullName?: string;
-  email?: string;
-  avatarUrl?: string;
-  [key: string]: string | any;
+	ticketType?: string;
+	quantity?: string;
+	fullName?: string;
+	email?: string;
+	avatarUrl?: string;
+	[key: string]: string | undefined;
 }
 
 export enum FormStep {

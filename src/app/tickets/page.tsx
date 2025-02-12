@@ -19,7 +19,8 @@ const TicketsDisplay = () => {
 
 	useEffect(() => {
 		const storedTickets = JSON.parse(localStorage.getItem("tickets") || "[]");
-		setTickets(storedTickets);
+		const sortedTickets = storedTickets.reverse();
+		setTickets(sortedTickets);
 	}, []);
 
 	const deleteTicket = (index: any) => {
@@ -49,7 +50,7 @@ const TicketsDisplay = () => {
 				{/* Header Section */}
 				<div className="flex justify-between items-center mb-8">
 					<div>
-						<h2 className="text-2xl font-serif mb-2">My Tickets</h2>
+						<h2 className="text-xl md:text-2xl font-serif mb-2">My Tickets</h2>
 						<p className="text-slate-300">
 							Total Tickets Booked: {tickets.length}
 						</p>
@@ -103,7 +104,7 @@ const TicketsDisplay = () => {
 											/>
 										</div>
 										<div>
-											<h1 className="text-6xl font-roadRage mb-2">
+											<h1 className="text-3xl md:text-6xl font-roadRage mb-2">
 												Techember Fest &apos;&apos;25
 											</h1>
 											<p className="text-slate-300 text-sm">
@@ -125,7 +126,7 @@ const TicketsDisplay = () => {
 									<div className="grid grid-cols-2 gap-4 text-sm mb-4">
 										<div>
 											<p className="text-gray-400">Name</p>
-											<p className="text-white">{ticket.fullName}</p>
+											<p className="text-white ">{ticket.fullName}</p>
 										</div>
 										<div>
 											<p className="text-gray-400">Email</p>

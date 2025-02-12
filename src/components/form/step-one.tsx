@@ -47,7 +47,7 @@ const FormStep1: React.FC<FormStep1Props> = ({
 
 	return (
 		<div className="space-y-6 ">
-			<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] rounded-lg p-6 text-center border border-slate-600">
+			<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] rounded-lg p-4 md:p-6 text-center border border-slate-600">
 				<div className="md:px-8">
 					<h1 className=" text-4xl md:text-7xl font-roadRage mb-2">
 						Techember Fest &apos;&apos;25

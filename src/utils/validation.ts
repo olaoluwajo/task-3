@@ -37,40 +37,19 @@ export const validateTicketForm = (
 				errors.avatarUrl = "Please upload a profile photo";
 			}
 
-			if (formData.aboutProject && formData.aboutProject.length > 500) {
+			if (!formData.aboutProject) {
+				errors.aboutProject = " Please tell us your special request";
+			}
+			if (formData.aboutProject.length > 500) {
 				errors.aboutProject =
-					"Project description must be less than 500 characters";
+					"Special request must be less than 500 characters";
+			}
+			if (formData.aboutProject.length < 5) {
+				errors.aboutProject =
+					"Special request cannot be less than 5  characters";
 			}
 			break;
 	}
 
 	return errors;
-};
-
-// src/utils/emailService.ts
-export const sendTicketEmail = async (
-	ticketData: TicketFormData,
-	ticketImageUrl: void
-): Promise<void> => {
-	try {
-		const response = await fetch("/api/send-ticket", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email: ticketData.email,
-				name: ticketData.fullName,
-				ticketType: ticketData.ticketType,
-				ticketImage: ticketImageUrl,
-			}),
-		});
-
-		if (!response.ok) {
-			throw new Error("Failed to send email");
-		}
-	} catch (error) {
-		console.error("Email sending failed:", error);
-		throw error;
-	}
 };
