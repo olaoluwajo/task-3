@@ -4,7 +4,7 @@ import React from "react";
 
 const NavBar = () => {
 	return (
-		<nav className="md:w-[80rem] w-full mx-auto flex justify-between items-center border mt-4  p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
+		<nav className="md:w-[80rem] sticky w-full mx-auto flex justify-between items-center border mt-4  p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
 			<div className="flex justify-center items-center">
 				<Image
 					src="/thumb.png"

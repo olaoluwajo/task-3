@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
 	return (
 		<html lang="en">
-			<body className="bg-[radial-gradient(ellipse_at_bottom,_#0E464F_-10%,_#02191D_40%)] min-h-screen px-4">
+			<body className="bg-[radial-gradient(ellipse_at_bottom,_#0E464F_-10%,_#02191D_40%)] min-h-screen relative">
 				<StateProvider>
 					<NavBar />
 					{children}
