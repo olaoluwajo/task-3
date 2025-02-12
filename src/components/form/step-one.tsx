@@ -47,20 +47,20 @@ const FormStep1: React.FC<FormStep1Props> = ({
 
 	return (
 		<div className="space-y-6 ">
-			<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] rounded-lg p-6 text-center">
+			<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] rounded-lg p-6 text-center border border-slate-600">
 				<div className="md:px-8">
-					<h1 className="text-6xl font-roadRage mb-2">
+					<h1 className=" text-4xl md:text-7xl font-roadRage mb-2">
 						Techember Fest &apos;&apos;25
 					</h1>
-					<p className="text-gray-300 mb-2 font-roboto">
-						Join us for an unforgettable experience at Techember Fest. Secure
-						your spot now.
-					</p>
-					<p className="text-gray-300">
-						📍 04 Rumens road, Ikoyi, Lagos || March 15, 2025 | 7:00 PM
-					</p>
+					<div className="text-gray-300 text-sm md:text-lg mb-2 font-roboto md:w-[70%] text-center mx-auto">
+						<p>
+							Join us for an unforgettable experience at Techember Fest. Secure
+							your spot now.
+						</p>
+						<p className="text-sm">📍 04 Rumens road, Ikoyi, Lagos || March 15, 2025 | 7:00 PM</p>{" "}
+					</div>
 				</div>
-			</div> 
+			</div>
 			<div className="space-y-4">
 				<h2 className="text-lg text-gray-300">Select Ticket Type:</h2>
 				<div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 border border-slate-600 p-4 rounded-2xl">

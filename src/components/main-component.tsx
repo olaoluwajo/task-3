@@ -84,7 +84,7 @@ export default function Home() {
 	};
 
 	return (
-		<main className="text-white p-4 max-w-4xl mx-auto">
+		<main className="text-white md:p-4 max-w-4xl mx-auto">
 			<div className="">
 				<div className="min-w-2xl mx-auto rounded-3xl border border-slate-500 p-8">
 					<div className="flex justify-between items-center mb-2">
@@ -159,7 +159,7 @@ export default function Home() {
 								)}
 
 								{currentStep !== FormStep.Complete && (
-									<div className="flex justify-between mt-6 gap-4">
+									<div className="flex flex-col md:flex-row justify-between mt-6 gap-4">
 										<motion.button
 											whileHover={{ scale: 1.02 }}
 											whileTap={{ scale: 0.98 }}
@@ -183,7 +183,9 @@ export default function Home() {
 											className="px-6 py-2 bg-teal-500 text-white rounded-lg w-full"
 											disabled={isLoading}
 										>
-											Next
+											{currentStep === FormStep.TicketSelection
+												? "Next"
+												: "Get My Free Ticket"}
 										</motion.button>
 									</div>
 								)}

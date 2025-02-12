@@ -23,19 +23,22 @@ const NavBar = () => {
 				<Link href="/" className="hover:text-white">
 					Events
 				</Link>
-				<Link href="#" className="hover:text-white">
+				<Link href="/tickets" className="hover:text-white">
 					My Tickets
 				</Link>
 				<Link href="/about-us" className="hover:text-white">
 					About Project
 				</Link>
 			</div>
-			<button className="group px-4 py-2 rounded-xl bg-white text-black flex items-center relative overflow-hidden">
+			<a
+				href="/tickets"
+				className="group px-4 py-2 rounded-xl bg-white text-black flex items-center relative overflow-hidden"
+			>
 				MY TICKETS
 				<span className="ml-2 transition-transform duration-300 group-hover:translate-x-2">
 					→
 				</span>
-			</button>
+			</a>
 		</nav>
 	);
 };

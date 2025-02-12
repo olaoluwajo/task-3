@@ -7,7 +7,6 @@ import Image from "next/image";
 interface FormStep2Props {
 	formData: TicketFormData;
 	updateFormData: any;
-	// updateFormData: (data: Partial<TicketFormData>) => void;
 	errors?: any;
 }
 
@@ -36,8 +35,8 @@ const FormStep2: React.FC<FormStep2Props> = ({
 				const data = await response.json();
 
 				updateFormData({
-					...formData, 
-					avatarUrl: data.secure_url, 
+					...formData,
+					avatarUrl: data.secure_url,
 				});
 			} catch (error) {
 				console.error("Error uploading image:", error);
@@ -51,32 +50,42 @@ const FormStep2: React.FC<FormStep2Props> = ({
 
 	return (
 		<div className="space-y-6">
-			<div
-				onClick={() => fileInputRef.current?.click()}
-				className="relative cursor-pointer bg-gray-800 rounded-lg p-4 text-center border border-dashed border-gray-500 hover:bg-gray-700 transition-all"
-			>
-				<input
-					type="file"
-					ref={fileInputRef}
-					onChange={handleImageUpload}
-					accept="image/*"
-					className="hidden"
-					title="Upload Image"
-				/>
-				{formData.avatarUrl ? (
-					<Image
-						src={formData.avatarUrl}
-						alt="Uploaded Image"
-						width={150}
-						height={150}
-						className="mx-auto rounded-lg object-cover shadow-md"
-					/>
-				) : (
-					<div className="flex flex-col items-center">
-						<Upload className="w-10 h-10 text-gray-400 mb-2" />
-						<p className="text-gray-400 text-sm">Click or drag to upload</p>
+			<div className="bg-[#001A1F] rounded-3xl p-8">
+				<h3 className="text-white mb-6">Upload Profile Photo</h3>
+				<div className="flex justify-center">
+					<div
+						onClick={() => fileInputRef.current?.click()}
+						className="relative cursor-pointer size-50 md:size-64 rounded-3xl bg-[#002A30] flex flex-col items-center justify-center border-2 border-dashed border-teal-500/30 hover:border-teal-500 transition-colors"
+					>
+						<input
+							type="file"
+							ref={fileInputRef}
+							onChange={handleImageUpload}
+							accept="image/*"
+							className="hidden"
+							title="Upload Image"
+						/>
+						{formData.avatarUrl ? (
+							<Image
+								src={formData.avatarUrl}
+								alt="Uploaded Image"
+								width={256}
+								height={256}
+								className="w-full h-full rounded-3xl object-cover"
+							/>
+						) : (
+							<div className="flex flex-col items-center p-6 text-center">
+								<div className="w-12 h-12 mb-4 rounded-full bg-teal-500/10 flex items-center justify-center">
+									<Upload className="w-6 h-6 text-teal-500" />
+								</div>
+								<p className="text-white text-sm mb-1">
+									Drag & drop or click to
+								</p>
+								<p className="text-white text-sm">upload</p>
+							</div>
+						)}
 					</div>
-				)}
+				</div>
 			</div>
 
 			<div className="space-y-4">
@@ -109,13 +118,13 @@ const FormStep2: React.FC<FormStep2Props> = ({
 				</div>
 
 				<div>
-					<label className="block text-gray-300 mb-2">About the project</label>
+					<label className="block text-gray-300 mb-2">Special Request</label>
 					<textarea
 						value={formData.aboutProject}
 						onChange={(e) => handleInputChange("aboutProject", e.target.value)}
 						className="w-full bg-transparent border border-gray-600 rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
 						rows={4}
-						placeholder="Describe your project in detail"
+						placeholder="Describe your request in detail"
 					/>
 					{errors?.aboutProject && (
 						<p className="text-red-500 text-sm mt-1">{errors.aboutProject}</p>
