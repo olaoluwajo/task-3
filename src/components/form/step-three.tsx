@@ -6,8 +6,14 @@ interface FormStep3Props {
 	formData: TicketFormData;
 	onDownload: () => Promise<void>;
 }
-const FormStep3: React.FC<FormStep3Props> = ({ formData }) => {
-  console.log(formData)
+
+const FormStep3: React.FC<FormStep3Props> = ({ formData, onDownload }) => {
+	const saveTicketToLocalStorage = () => {
+		const tickets = JSON.parse(localStorage.getItem("tickets") || "[]");
+		tickets.push(formData);
+		localStorage.setItem("tickets", JSON.stringify(tickets));
+	};
+
 	return (
 		<div className="text-center space-y-6">
 			<div>
@@ -21,7 +27,7 @@ const FormStep3: React.FC<FormStep3Props> = ({ formData }) => {
 				<div className="flex items-center space-x-4 bg-gradient-to-r from-teal-900 to-teal-800 p-4 rounded-lg">
 					<div className="w-24 h-24 bg-white rounded-lg flex items-center justify-center">
 						<Image
-							src="/api/placeholder/96/96"
+							src={formData.avatarUrl || "/api/placeholder/96/96"}
 							alt="QR Code"
 							width={96}
 							height={96}
@@ -50,7 +56,8 @@ const FormStep3: React.FC<FormStep3Props> = ({ formData }) => {
 				</button>
 				<button
 					onClick={() => {
-						/* Implement download functionality */
+						saveTicketToLocalStorage();
+						onDownload();
 					}}
 					className="flex-1 py-2 px-4 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
 				>

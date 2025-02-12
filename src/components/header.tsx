@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const NavBar = () => {
 	return (
-		<nav className="md:w-[80rem] w-full mx-auto flex justify-between items-center border  p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
+		<nav className="md:w-[80rem] w-full mx-auto flex justify-between items-center border mt-4  p-4 rounded-2xl border-slate-500 bg-transparent shadow-md">
 			<div className="flex justify-center items-center">
 				<Image
 					src="/thumb.png"
@@ -19,15 +20,15 @@ const NavBar = () => {
 				/>
 			</div>
 			<div className="hidden md:block space-x-7 text-gray-300">
-				<a href="#" className="hover:text-white">
+				<Link href="/" className="hover:text-white">
 					Events
-				</a>
-				<a href="#" className="hover:text-white">
+				</Link>
+				<Link href="#" className="hover:text-white">
 					My Tickets
-				</a>
-				<a href="#" className="hover:text-white">
+				</Link>
+				<Link href="/about-us" className="hover:text-white">
 					About Project
-				</a>
+				</Link>
 			</div>
 			<button className="group px-4 py-2 rounded-xl bg-white text-black flex items-center relative overflow-hidden">
 				MY TICKETS

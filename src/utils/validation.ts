@@ -7,41 +7,41 @@ export const validateTicketForm = (
 	const errors: ValidationErrors = {};
 
 	switch (step) {
-		// case FormStep.TicketSelection:
-		// 	if (!formData.ticketType) {
-		// 		errors.ticketType = "Please select a ticket type";
-		// 	}
-		// 	if (!formData.quantity || formData.quantity < 1) {
-		// 		errors.quantity = "Please select the number of tickets";
-		// 	}
-		// 	if (formData.quantity > 5) {
-		// 		errors.quantity = "Maximum 5 tickets per person";
-		// 	}
-		// 	break;
+		case FormStep.TicketSelection:
+			if (!formData.ticketType) {
+				errors.ticketType = "Please select a ticket type";
+			}
+			if (!formData.quantity || formData.quantity < 1) {
+				errors.quantity = "Please select the number of tickets";
+			}
+			if (formData.quantity > 5) {
+				errors.quantity = "Maximum 5 tickets per person";
+			}
+			break;
 
-		// case FormStep.AttendeeDetails:
-		// 	if (!formData.fullName) {
-		// 		errors.fullName = "Name is required";
-		// 	} else if (formData.fullName.length < 3) {
-		// 		errors.fullName = "Name must be at least 3 characters";
-		// 	}
+		case FormStep.AttendeeDetails:
+			if (!formData.fullName) {
+				errors.fullName = "Name is required";
+			} else if (formData.fullName.length < 3) {
+				errors.fullName = "Name must be at least 3 characters";
+			}
 
-		// 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		// 	if (!formData.email) {
-		// 		errors.email = "Email is required";
-		// 	} else if (!emailRegex.test(formData.email)) {
-		// 		errors.email = "Please enter a valid email";
-		// 	}
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!formData.email) {
+				errors.email = "Email is required";
+			} else if (!emailRegex.test(formData.email)) {
+				errors.email = "Please enter a valid email";
+			}
 
-		// 	if (!formData.avatarUrl) {
-		// 		errors.avatarUrl = "Please upload a profile photo";
-		// 	}
+			if (!formData.avatarUrl) {
+				errors.avatarUrl = "Please upload a profile photo";
+			}
 
-		// 	if (formData.aboutProject && formData.aboutProject.length > 500) {
-		// 		errors.aboutProject =
-		// 			"Project description must be less than 500 characters";
-		// 	}
-		// 	break;
+			if (formData.aboutProject && formData.aboutProject.length > 500) {
+				errors.aboutProject =
+					"Project description must be less than 500 characters";
+			}
+			break;
 	}
 
 	return errors;

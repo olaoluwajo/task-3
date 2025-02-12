@@ -37,8 +37,16 @@ const FormStep1: React.FC<FormStep1Props> = ({
 		},
 	];
 
+	const handleTicketTypeChange = (type: string, price: number) => {
+		updateFormData({ ticketType: type, price });
+	};
+
+	const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		updateFormData({ quantity: Number(e.target.value) });
+	};
+
 	return (
-		<div className="space-y-6">
+		<div className="space-y-6 ">
 			<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] rounded-lg p-6 text-center">
 				<div className="md:px-8">
 					<h1 className="text-3xl font-serif mb-2">Techember Fest &apos;25</h1>
@@ -57,9 +65,7 @@ const FormStep1: React.FC<FormStep1Props> = ({
 					{tickets.map((ticket) => (
 						<button
 							key={ticket.type}
-							onClick={() =>
-								updateFormData({ ticketType: ticket.type, price: ticket.price })
-							}
+							onClick={() => handleTicketTypeChange(ticket.type, ticket.price)}
 							className={`p-3 rounded-lg border transition-all ${
 								formData.ticketType === ticket.type
 									? "border-teal-500 bg-teal-900/30"
@@ -90,7 +96,7 @@ const FormStep1: React.FC<FormStep1Props> = ({
 				<select
 					id="ticket-quantity"
 					value={formData.quantity}
-					onChange={(e) => updateFormData({ quantity: Number(e.target.value) })}
+					onChange={handleQuantityChange}
 					className="w-full bg-transparent border border-gray-600 rounded-lg p-3 text-gray-300 focus:border-teal-500 focus:ring-1 focus:ring-teal-500"
 				>
 					{[1, 2, 3, 4, 5].map((num) => (

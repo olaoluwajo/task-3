@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { sendTicketEmail, validateTicketForm } from "@/utils/validation";
+import { validateTicketForm } from "@/utils/validation"; // Remove sendTicketEmail import
 import { FormStep, TicketFormData } from "@/types";
 import { downloadTicket } from "@/utils/ticket-download";
 import TransitionWrapper from "@/context/transition-wrapper";
@@ -28,6 +28,13 @@ export default function Home() {
 		price: 0,
 	});
 
+	const handleUpdateFormData = (data: Partial<TicketFormData>) => {
+		setFormData((prevData) => ({
+			...prevData,
+			...data,
+		}));
+	};
+
 	const ticketRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -42,6 +49,7 @@ export default function Home() {
 	}, [formData]);
 
 	const handleNext = async () => {
+		console.log("Form Data:", formData);
 		const errors = validateTicketForm(formData, currentStep);
 
 		if (Object.keys(errors).length > 0) {
@@ -49,15 +57,15 @@ export default function Home() {
 			return;
 		}
 
-		if (currentStep === FormStep.AttendeeDetails) {
+		if (currentStep === FormStep.Complete) {
 			setIsLoading(true);
 			try {
-				// Generate ticket image
 				if (ticketRef.current) {
 					const ticketImage = await downloadTicket(ticketRef.current);
-					// Send email with ticket
-					await sendTicketEmail(formData, ticketImage);
-					showSuccess("Ticket sent to your email!");
+					const tickets = JSON.parse(localStorage.getItem("tickets") || "[]");
+					tickets.push({ ...formData, ticketImage });
+					localStorage.setItem("tickets", JSON.stringify(tickets));
+					showSuccess("Ticket booked successfully!");
 				}
 			} catch (error) {
 				console.log(error);
@@ -76,20 +84,18 @@ export default function Home() {
 	};
 
 	return (
-		<main className="  text-white p-4">
-			<div className="  ">
-				<div className="max-w-2xl mx-auto rounded-3xl border border-slate-500 p-8">
+		<main className="text-white p-4 max-w-4xl mx-auto">
+			<div className="">
+				<div className="min-w-2xl mx-auto rounded-3xl border border-slate-500 p-8">
 					<div className="flex justify-between items-center mb-2">
-						<h2 className="text-xl font-serif ">
+						<h2 className="text-xl font-serif">
 							{currentStep === FormStep.TicketSelection && "Ticket Selection"}
 							{currentStep === FormStep.AttendeeDetails && "Attendee Details"}
 							{currentStep === FormStep.Complete && "Ready"}
 						</h2>
 						<span>Step {currentStep}/3</span>
 					</div>
-					{/* Progress bar */}
-
-					<div className="rounded-3xl ">
+					<div className="rounded-3xl">
 						<div className="relative w-full h-1 bg-gray-700 rounded mb-8 overflow-hidden">
 							<motion.div
 								className="absolute h-full bg-teal-500 rounded"
@@ -99,7 +105,6 @@ export default function Home() {
 							/>
 						</div>
 
-						{/* Loading overlay */}
 						<AnimatePresence>
 							{isLoading && (
 								<motion.div
@@ -114,7 +119,6 @@ export default function Home() {
 								</motion.div>
 							)}
 						</AnimatePresence>
-						{/* Error toast */}
 						<AnimatePresence>
 							{error && (
 								<motion.div
@@ -127,15 +131,22 @@ export default function Home() {
 								</motion.div>
 							)}
 						</AnimatePresence>
-						{/* Form content */}
 						<TransitionWrapper step={currentStep}>
-							<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] border  border-slate-500 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+							<div className="bg-[radial-gradient(ellipse_at_top_left,_#07373F_0%,_#0A0C11_140%)] border border-slate-500 backdrop-blur-sm rounded-3xl p-6 shadow-xl min-w-4xl">
 								{currentStep === FormStep.TicketSelection && (
-									<FormStep1 formData={formData} updateFormData={setFormData} />
+									<FormStep1
+										formData={formData}
+										updateFormData={handleUpdateFormData}
+										errors={error}
+									/>
 								)}
 
 								{currentStep === FormStep.AttendeeDetails && (
-									<FormStep2 formData={formData} updateFormData={setFormData} />
+									<FormStep2
+										formData={formData}
+										updateFormData={handleUpdateFormData}
+										errors={error}
+									/>
 								)}
 
 								{currentStep === FormStep.Complete && (
@@ -149,7 +160,6 @@ export default function Home() {
 
 								{currentStep !== FormStep.Complete && (
 									<div className="flex justify-between mt-6 gap-4">
-										{/* Left Button: Cancel (Step 1) / Back (Other Steps) */}
 										<motion.button
 											whileHover={{ scale: 1.02 }}
 											whileTap={{ scale: 0.98 }}
@@ -166,7 +176,6 @@ export default function Home() {
 												: "Back"}
 										</motion.button>
 
-										{/* Right Button: Always "Next" */}
 										<motion.button
 											whileHover={{ scale: 1.02 }}
 											whileTap={{ scale: 0.98 }}
