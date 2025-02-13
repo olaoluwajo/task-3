@@ -28,14 +28,19 @@ export default function Home() {
 		price: 0,
 	});
 
-	// const handleUpdateFormData = (data: Partial<TicketFormData>) => {
-	// 	setFormData((prevData) => ({
-	// 		...prevData,
-	// 		...data,
-	// 	}));
-	// };
+	const handleResetForm = () => {
+		setFormData({
+			ticketType: "REGULAR",
+			quantity: 1,
+			fullName: "",
+			email: "",
+			avatarUrl: "",
+			aboutProject: "",
+			price: 0,
+		});
+	};
 
-		const handleUpdateFormData = (data: Partial<TicketFormData>) => {
+	const handleUpdateFormData = (data: Partial<TicketFormData>) => {
 		setFormData((prevData) => ({
 			...prevData,
 			...data,
@@ -65,14 +70,13 @@ export default function Home() {
 		localStorage.setItem("ticketFormData", JSON.stringify(formData));
 	}, [formData]);
 
-
 	const handleNext = async () => {
 		// console.log("Form Data:", formData);
 		const errors = validateTicketForm(formData, currentStep);
 		console.log("ERROR", errors);
 
 		if (Object.keys(errors).length > 0) {
-			setError(errors); 
+			setError(errors);
 			return;
 		}
 
@@ -88,7 +92,7 @@ export default function Home() {
 				}
 			} catch (error) {
 				console.log(error);
-				setError({ general: "Failed to process ticket. Please try again." }); 
+				setError({ general: "Failed to process ticket. Please try again." });
 				return;
 			} finally {
 				setIsLoading(false);
@@ -173,6 +177,7 @@ export default function Home() {
 										<FormStep3
 											formData={formData}
 											onDownload={() => downloadTicket(ticketRef.current!)}
+											onResetForm={handleResetForm}
 										/>
 									</div>
 								)}

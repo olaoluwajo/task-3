@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { TicketFormData } from "@/types";
+import Link from "next/link";
 
 interface FormStep3Props {
 	formData: TicketFormData;
 	onDownload: () => Promise<void>;
+	onResetForm: () => void;
 }
 
-const FormStep3: React.FC<FormStep3Props> = ({ formData, onDownload }) => {
+const FormStep3: React.FC<FormStep3Props> = ({
+	formData,
+	onDownload,
+	onResetForm,
+}) => {
 	const [showModal, setShowModal] = useState(false);
 
 	const saveTicketToLocalStorage = () => {
@@ -28,6 +34,10 @@ const FormStep3: React.FC<FormStep3Props> = ({ formData, onDownload }) => {
 		saveTicketToLocalStorage();
 		await onDownload();
 		setShowModal(true);
+	};
+	const handleBookAnotherTicket = () => {
+		onResetForm();
+		window.location.reload();
 	};
 
 	return (
@@ -218,7 +228,7 @@ const FormStep3: React.FC<FormStep3Props> = ({ formData, onDownload }) => {
 			{/* Buttons */}
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 				<button
-					onClick={() => window.location.reload()}
+					onClick={handleBookAnotherTicket}
 					className="py-2.5 sm:py-3 px-4 sm:px-6 rounded-lg border border-teal-500 text-teal-500 hover:bg-teal-500/10 transition-colors text-sm sm:text-base"
 				>
 					Book Another Ticket
@@ -240,12 +250,13 @@ const FormStep3: React.FC<FormStep3Props> = ({ formData, onDownload }) => {
 						<p className="text-sm sm:text-base text-gray-600 mt-2">
 							Your ticket has been successfully downloaded.
 						</p>
-						<button
-							onClick={() => setShowModal(false)}
+						<Link
+							href="/"
+							onClick={handleBookAnotherTicket}
 							className="mt-4 px-4 sm:px-6 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition text-sm sm:text-base"
 						>
 							Book Another Ticket
-						</button>
+						</Link>
 					</div>
 				</div>
 			)}
