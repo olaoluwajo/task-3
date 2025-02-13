@@ -225,7 +225,6 @@ const FormStep3: React.FC<FormStep3Props> = ({
 				</div>
 			</div>
 
-			{/* Buttons */}
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 				<button
 					onClick={handleBookAnotherTicket}
